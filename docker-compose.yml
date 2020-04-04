@@ -1,0 +1,16 @@
+version: "3"
+services:
+    stickyDB:
+        container_name: stickyDB
+        image: mysql
+        ports:
+            - "3306:3306"
+        volumes:
+            # 初期データを投入するSQLが格納されているdir
+            - ./data/mysql_init:/docker-entrypoint-initdb.d
+            # 永続化するときにマウントするdir
+            - ./data/mysql_data:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_USER: test
+            MYSQL_PASSWORD: test

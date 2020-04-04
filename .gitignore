@@ -1,0 +1,3 @@
+.venv*
+.history
+mysql_data

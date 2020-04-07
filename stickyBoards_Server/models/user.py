@@ -1,15 +1,26 @@
+from flask import Blueprint
+from models import db
 
-def get(board_id):
-    pass
+app = Blueprint('user', __name__)
+
+@app.route('/<board_id>', methods={'GET'})
+def get_all_users(board_id):
+    return ("user.get")
+
+@app.route('/<user_id>', methods={'GET'})
+def get_user_info(user_id):
+    return ("user.get")
+
+@app.route('/<user_id>', methods={'POST'})
+def register_user_info(user_id):
+    return ("user.post")
 
 
-def post(board_id):
-    pass
+@app.route('/<user_id>', methods={'PUT'})
+def update_user_info(user_id):
+    return ("user.put")
 
 
-def put(board_id):
-    pass
-
-
-def delete(board_id):
-    pass
+@app.route('/<user_id>', methods={'DELETE'})
+def delete_user_info(user_id):
+    return ("user.delete")

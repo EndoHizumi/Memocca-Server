@@ -1,27 +1,26 @@
-import dataset
-import ..src.main.app
+from flask import Blueprint
+from models import db
 
-class board:
+app = Blueprint('board', __name__)
 
-    def __init__(self):
-        user = env['sticky_db_user']
-        password = env['sticky_db_password']
-        db_location = env['sticky_db_location']
+@app.route('/', methods={'GET'})
+def get():
+    return ("board.get")
 
-        self.db = dataset.connect(f'mysql://{user}:{password}@{db_location}/board')
+@app.route('/<board_id>', methods={'GET'})
+def get2():
+    return ("board.get")
 
-    @app.route('board/<board_id>', methods={'GET'})
-    def get(board_id):
-        pass
-
-
-    def post(board_id):
-        pass
+@app.route('/<board_id>', methods={'POST'})
+def post(board_id):
+    return ("board.post")
 
 
-    def put(board_id):
-        pass
+@app.route('/<board_id>', methods={'PUT'})
+def put(board_id):
+    return ("board.put")
 
 
-    def delete(board_id):
-        pass
+@app.route('/<board_id>', methods={'DELETE'})
+def delete(board_id):
+    return ("board.delete")

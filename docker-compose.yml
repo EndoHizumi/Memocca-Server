@@ -27,5 +27,6 @@ services:
             STICKY_BOARDS_DB_PASS: root
             STICKY_BOARDS_DB_LOCATION: stickyDB
         working_dir: /var/www/html
-        # command: pip install -r /tmp/requirements.txt
-        command: python -m http.server 8080
+        command: >
+            bash -c "pip install -r /tmp/requirements.txt &&
+            python ./main.py"

@@ -16,9 +16,10 @@ create table stickies
 create table boards
 (
     board_id varchar(32),
+    board_name VARCHAR(512),
     owner_id varchar(32),
-    user_id int,
-    password varchar(255)
+    password varchar(255),
+    private int
 );
 create table colors
 (

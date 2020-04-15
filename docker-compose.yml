@@ -10,6 +10,7 @@ services:
             - ./data/mysql_init:/docker-entrypoint-initdb.d
             # 永続化するときにマウントするdir
             - ./data/mysql_data:/var/lib/mysql
+            - ./data/mysql_conf/default_authentication.cnf:/etc/mysql/conf.d/default_authentication.cnf
         environment:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_USER: test
@@ -25,8 +26,9 @@ services:
         environment:
             STICKY_BOARDS_DB_ID: root
             STICKY_BOARDS_DB_PASS: root
-            STICKY_BOARDS_DB_LOCATION: stickyDB
+            STICKY_BOARDS_DB_LOCATION: sticky_db
         working_dir: /var/www/html
         command: >
-            bash -c "pip install -r /tmp/requirements.txt &&
+            bash -c "apt-get install libmariadb-dev && 
+            pip install -r /tmp/requirements.txt &&
             python ./main.py"

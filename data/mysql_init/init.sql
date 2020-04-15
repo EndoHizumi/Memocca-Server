@@ -26,3 +26,6 @@ create table colors
     color_id int,
     color_namr VARCHAR(255)
 );
+insert into boards values ('fugafuga','board1','owner1','1','','0');
+insert into boards values ('hogehoge','board2','owner2','2','','0');
+insert into boards values ('foobar','board3','owner3','1','','1');

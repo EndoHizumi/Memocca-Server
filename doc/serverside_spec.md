@@ -44,6 +44,7 @@
         オーナーID
         ユーザーID
         合言葉
+        非公開フラグ
     }
 
     entity "colors" as colors <<M, MASTER_MARK_COLOR>>{

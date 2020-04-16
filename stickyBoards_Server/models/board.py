@@ -48,11 +48,12 @@ def set_id(board_name):
     return hashlib.sha256(id_raw.encode()).hexdigest()
 
 
-def set_response_json(data, message=''):
+def set_response_json(data, message='', status=200):
 
-    if len(message) == 0:
+    if str(status)[0:2] == '20':
         responce = {'status': 'success'}
     else:
         responce = {'status': 'failed', 'message': message}
     responce.update({'data': data})
-    return jsonify(responce)
+    return jsonify(responce), status
+

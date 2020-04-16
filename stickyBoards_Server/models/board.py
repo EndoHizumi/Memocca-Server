@@ -2,6 +2,80 @@ from flask import Blueprint, jsonify, request
 from models import db
 import hashlib
 from datetime import datetime
+from cerberus import Validator
+
+get_board_info_schema = {
+    "board_id": {
+        "type": "string",
+        "required": True,
+        "maxlength": 128,
+        "minlength": 128
+    }
+}
+create_board_schema = {
+    "board_name": {
+        "type": "string",
+        "required": True,
+        "maxlength": 512,
+        "minlength": 0
+    },
+    "owner_id": {
+        "type": "string",
+        "required": True,
+        "maxlength": 32,
+        "minlength": 0
+    },
+    "password": {
+        "type": "string",
+        "required": False,
+        "maxlength": 255,
+        "minlength": 0
+    },
+    "private": {
+        "type": "integer",
+        'allowed': [0, 1],
+        "required": False,
+        "max": 1,
+        "min": 0
+    },
+}
+
+update_board_schema = {
+    "board_name": {
+        "type": "string",
+        "required": False,
+        "maxlength": 512,
+        "minlength": 0
+    },
+    "owner_id": {
+        "type": "string",
+        "required": False,
+        "maxlength": 32,
+        "minlength": 0
+    },
+    "password": {
+        "type": "string",
+        "required": False,
+        "maxlength": 255,
+        "minlength": 0
+    },
+    "private": {
+        "type": "integer",
+        'allowed': [0, 1],
+        "required": False,
+        "max": 1,
+        "min": 0
+    },
+}
+
+delete_board_schema = {
+    "board_id": {
+        "type": "string",
+        "required": False,
+        "maxlength": 128,
+        "minlength": 128
+    },
+}
 
 app = Blueprint('board', __name__)
 sticky_db = db.get_connection()
@@ -17,8 +91,11 @@ def get_all_boards():
 
 @app.route('/<board_id>', methods={'GET'})
 def get_board_info(board_id):
-    result = board_table.find(board_id=board_id)
-    return set_response_json(list(result))
+    result, message = validate_request(get_board_info_schema, {'board_id': board_id})
+    if not result:
+        return set_response_json(data={'reason': message}, message=f'validation failed. reason: {list(message.keys())}', status=400)
+    result = list(board_table.find(board_id=board_id))
+    return set_response_json(result)
 
 
 @app.route('/', methods={'POST'})
@@ -45,7 +122,7 @@ def delete_board(board_id):
 
 def set_id(board_name):
     id_raw = f'{board_name}{datetime.now()}'
-    return hashlib.sha256(id_raw.encode()).hexdigest()
+    return hashlib.sha512(id_raw.encode()).hexdigest()
 
 
 def set_response_json(data, message='', status=200):
@@ -57,3 +134,9 @@ def set_response_json(data, message='', status=200):
     responce.update({'data': data})
     return jsonify(responce), status
 
+
+def validate_request(schema, value):
+    validator = Validator(schema)
+    if not validator.validate(value):
+        return False, validator.errors
+    return True, None

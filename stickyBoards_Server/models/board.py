@@ -10,6 +10,7 @@ board_table = sticky_db['boards']
 def get_all_boards():
     board_table = sticky_db['boards']
     result = board_table.find(private=0)
+    data = [{'board_id': row['board_id'], 'board_name': row['board_name']} for row in result]
     return set_response_json(data)
 
 

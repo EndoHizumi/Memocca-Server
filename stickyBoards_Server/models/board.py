@@ -3,6 +3,7 @@ from models import db
 
 app = Blueprint('board', __name__)
 sticky_db = db.get_connection()
+board_table = sticky_db['boards']
 
 
 @app.route('/', methods={'GET'})

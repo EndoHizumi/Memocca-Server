@@ -15,7 +15,7 @@ create table stickies
 );
 create table boards
 (
-    board_id varchar(32),
+    board_id varchar(256),
     board_name VARCHAR(512),
     owner_id varchar(32),
     password varchar(255),

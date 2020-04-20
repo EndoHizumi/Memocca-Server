@@ -1,7 +1,8 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, current_app
 from models import db
 import hashlib
 from datetime import datetime
+import requests
 from cerberus import Validator
 
 get_board_info_schema = {
@@ -84,18 +85,19 @@ board_table = sticky_db['boards']
 
 @app.route('/', methods={'GET'})
 def get_all_boards():
-    result = board_table.find(private=0)
-    data = [{'board_id': row['board_id'], 'board_name': row['board_name']} for row in result]
-    return set_response_json(data)
-
+    # result = board_table.find(private=0)
+    # data = [{'board_id': row['board_id'], 'board_name': row['board_name']} for row in result]
+    # return set_response_json(data)
+    pass
 
 @app.route('/<board_id>', methods={'GET'})
 def get_board_info(board_id):
-    result, message = validate_request(get_board_info_schema, {'board_id': board_id})
-    if not result:
-        return set_response_json(data={'reason': message}, message=f'validation failed. reason: {list(message.keys())}', status=400)
-    result = list(board_table.find(board_id=board_id))
-    return set_response_json(result)
+    # result, message = validate_request(get_board_info_schema, {'board_id': board_id})
+    # if not result:
+    #     return set_response_json(data={'reason': message}, message=f'validation failed. reason: {list(message.keys())}', status=400)
+    # result = list(board_table.find(board_id=board_id))
+    # return set_response_json(result)
+    pass
 
 
 @app.route('/', methods={'POST'})
@@ -112,12 +114,24 @@ def create_board():
 
 @app.route('/<board_id>', methods={'PUT'})
 def update_board(board_id):
-    return ("board.put")
+    # request_json = request.json
+    # old_table = requests.get(f"http://127.0.0.1:8080/board/{board_id}").json()
+    # request_json.update({'board_id': board_id})
+    # board_table.update(request_json, ['board_id'])
+    # new_table = requests.get(f"http://127.0.0.1:8080/board/{board_id}").json()
+    # return set_response_json({'board_id': board_id, 'changed': {'request': request.json, 'old': old_table['data'][0], 'new': new_table['data'][0]}})
+    pass
 
 
 @app.route('/<board_id>', methods={'DELETE'})
 def delete_board(board_id):
-    return ("board.delete")
+    # old_table = requests.get(f"http://127.0.0.1:8080/board/{board_id}").json()
+    # if len(old_table['data']) == 0:
+    #     return set_response_json(data=None, message=f'board_id:{board_id} is not found', status=404)
+    # board_table.delete(board_id=board_id)
+    # new_table = requests.get(f"http://127.0.0.1:8080/board/{board_id}").json()
+    # return set_response_json({'board_id': board_id, 'changed': {'request': {'board_id': board_id}, 'old': old_table['data'], 'new': new_table['data']}})
+    pass
 
 
 def set_id(board_name):

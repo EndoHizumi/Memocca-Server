@@ -1,6 +1,4 @@
-from flask import Blueprint, jsonify, request, current_app
-from models import db
-import hashlib
+import uuid
 from datetime import datetime
 import requests
 from cerberus import Validator
@@ -104,7 +102,7 @@ def get_board_info(board_id):
 def create_board():
     request_json = request.json
     name = request_json['name']
-    board_id = set_id(name)
+    board_id = str(uuid.uuid4())[-6:]
     password = request_json['password']
     private = request_json.get('private', 1)
     user_id = ''

@@ -1,7 +1,10 @@
-from flask import Blueprint, request, current_app
+import uuid
+
+from cerberus import Validator
+from flask import Blueprint, current_app, request
+
 from models import db
 from models.io_util import set_response_json, validate_request
-import uuid
 
 app = Blueprint('sticky', __name__)
 sticky_db = db.get_connection()

@@ -1,7 +1,12 @@
+
 import uuid
 from datetime import datetime
+
 import requests
 from cerberus import Validator
+from flask import Blueprint, current_app, jsonify, request
+
+from models import db
 
 get_board_info_schema = {
     "board_id": {
@@ -130,11 +135,6 @@ def delete_board(board_id):
     # new_table = requests.get(f"http://127.0.0.1:8080/board/{board_id}").json()
     # return set_response_json({'board_id': board_id, 'changed': {'request': {'board_id': board_id}, 'old': old_table['data'], 'new': new_table['data']}})
     pass
-
-
-def set_id(board_name):
-    id_raw = f'{board_name}{datetime.now()}'
-    return hashlib.sha512(id_raw.encode()).hexdigest()
 
 
 def set_response_json(data, message='', status=200):

@@ -20,7 +20,7 @@
 | stickies | 作ったユーザー・内容・タグなど、付箋のこと・追加された部屋・座標の管理 |
 | owners   | 作ったユーザーと作ったボードの管理                                     |
 | boards   | 各部屋に参加しているメンバーの管理                                     | 退室者は物理削除でいいと思う。 |
-| colors   | 付箋の色のマスタ                                                       |
+| untitled | ユーザー行動管理 |
 
 ### 関連
 
@@ -35,7 +35,7 @@
         タグ
         ボードID
         座標
-        カラーID
+        カラーコード
     }
 
     entity "boards" as boards <<T, MASTER_MARK_COLOR>>{
@@ -47,14 +47,7 @@
         非公開フラグ
     }
 
-    entity "colors" as colors <<M, MASTER_MARK_COLOR>>{
-        + カラーID
-        --
-        付箋の背景色
-    } 
-
     stickies }o--- boards
-    stickies }o--- colors
     users ---o{ boards
     users ---o{ stickies
 @enduml

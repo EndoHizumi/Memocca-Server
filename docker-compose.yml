@@ -15,20 +15,28 @@ services:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_USER: test
             MYSQL_PASSWORD: test
+    stickySseQueue:
+        container_name: sticky_sse_queue
+        image: "redis:latest"
+        ports:
+          - "6379:6379"
+        volumes:
+          - "./data/redis:/data"
     stickyApp:
         container_name: sticky_app
         image: python
         ports:
             - "8080:8080"
         volumes:
-            - "./stickyBoards_Server:/var/www/html"
+            - "./stickyBoards_Server:/var/www/html/"
             - "./requirements.txt:/tmp/requirements.txt"
+            - "./tests:/var/www/html/test"
         environment:
             STICKY_BOARDS_DB_ID: root
             STICKY_BOARDS_DB_PASS: root
             STICKY_BOARDS_DB_LOCATION: sticky_db
         working_dir: /var/www/html
         command: >
-            bash -c "apt-get install libmariadb-dev && 
+            bash -c "apt-get install -y libmariadb-dev && 
             pip install -r /tmp/requirements.txt &&
             python ./main.py"

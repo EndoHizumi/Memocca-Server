@@ -11,8 +11,8 @@ get_board_info_schema = {
     "board_id": {
         "type": "string",
         "required": True,
-        "maxlength": 128,
-        "minlength": 128
+        "maxlength": 6,
+        "minlength": 6
     }
 }
 create_board_schema = {
@@ -53,7 +53,7 @@ update_board_schema = {
     "owner_id": {
         "type": "string",
         "required": False,
-        "maxlength": 32,
+        "maxlength": 6,
         "minlength": 0
     },
     "password": {
@@ -75,8 +75,8 @@ delete_board_schema = {
     "board_id": {
         "type": "string",
         "required": False,
-        "maxlength": 128,
-        "minlength": 128
+        "maxlength": 6,
+        "minlength": 6
     },
 }
 
@@ -87,19 +87,19 @@ board_table = sticky_db['boards']
 
 @app.route('/', methods={'GET'})
 def get_all_boards():
-    # result = board_table.find(private=0)
-    # data = [{'board_id': row['board_id'], 'board_name': row['board_name']} for row in result]
-    # return set_response_json(data)
-    pass
+    return set_response_json({'data': 'Not Implement'})
+    result = board_table.find(private=0)
+    data = [{'board_id': row['board_id'], 'board_name': row['board_name']} for row in result]
 
 @app.route('/<board_id>', methods={'GET'})
 def get_board_info(board_id):
-    # result, message = validate_request(get_board_info_schema, {'board_id': board_id})
-    # if not result:
-    #     return set_response_json(data={'reason': message}, message=f'validation failed. reason: {list(message.keys())}', status=400)
-    # result = list(board_table.find(board_id=board_id))
-    # return set_response_json(result)
-    pass
+    return set_response_json({'data': 'Not Implement'})
+
+    result, message = validate_request(get_board_info_schema, {'board_id': board_id})
+    if not result:
+        return set_response_json(data={'reason': message}, message=f'validation failed. reason: {list(message.keys())}', status=400)
+    result = list(board_table.find(board_id=board_id))
+    return set_response_json(result)
 
 
 @app.route('/', methods={'POST'})

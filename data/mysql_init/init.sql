@@ -4,9 +4,9 @@ create table stickies
 (
     sticky_id varchar(32) NOT NULL,
     user_id int,
-    board_id varchar(32),
-    color_code int,
-    text VARCHAR(1024),
+    board_id varchar(6),
+    color_code int(8),
+    text VARCHAR(8000),
     point_x int,
     point_y int,
     width int,
@@ -20,6 +20,7 @@ create table boards
     password varchar(255),
     private int
 );
+
 
 insert into boards values ('fugafuga','board1','owner1','','0');
 insert into boards values ('hogehoge','board2','owner2','','0');

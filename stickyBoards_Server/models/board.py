@@ -90,11 +90,10 @@ def get_all_boards():
     return set_response_json({'data': 'Not Implement'})
     result = board_table.find(private=0)
     data = [{'board_id': row['board_id'], 'board_name': row['board_name']} for row in result]
+    return set_response_json(data=data)
 
 @app.route('/<board_id>', methods={'GET'})
 def get_board_info(board_id):
-    return set_response_json({'data': 'Not Implement'})
-
     result, message = validate_request(get_board_info_schema, {'board_id': board_id})
     if not result:
         return set_response_json(data={'reason': message}, message=f'validation failed. reason: {list(message.keys())}', status=400)

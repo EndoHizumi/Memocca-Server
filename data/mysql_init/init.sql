@@ -18,8 +18,18 @@ create table boards
     board_name VARCHAR(512),
     owner_id varchar(32),
     password varchar(255),
+    salt VARCHAR(29),
     private int
 );
+
+create table users
+(
+    user_id varchar(8),
+    user_name VARCHAR(256),
+    password varchar(255),
+    email VARCHAR(256),
+    salt VARCHAR(29)
+)
 
 
 insert into boards values ('fugafuga','board1','owner1','','0');

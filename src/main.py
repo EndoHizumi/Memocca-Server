@@ -1,9 +1,9 @@
 from flask import Flask, request
 from flask_sse import sse
-from .models.board import app as board_app
-from .models.sticky import app as sticky_app
-from .models.user import app as user_app
-from .models import db, io_util
+from models.board import app as board_app
+from models.sticky import app as sticky_app
+from models.user import app as user_app
+from models import db, io_util
 
 
 app = Flask(__name__)

@@ -1,11 +1,8 @@
 import uuid
-from datetime import datetime
-
-import requests
 from cerberus import Validator
-from flask import Blueprint, current_app, jsonify, request
-
-from models import db
+from flask import Blueprint, jsonify, request
+from .io_util import set_response_json, validate_request
+from . import db
 
 get_board_info_schema = {
     "board_id": {
@@ -88,9 +85,10 @@ board_table = sticky_db['boards']
 @app.route('/', methods={'GET'})
 def get_all_boards():
     return set_response_json({'data': 'Not Implement'})
-    result = board_table.find(private=0)
-    data = [{'board_id': row['board_id'], 'board_name': row['board_name']} for row in result]
-    return set_response_json(data=data)
+    # result = board_table.find(private=0)
+    # data = [{'board_id': row['board_id'], 'board_name': row['board_name']} for row in result]
+    # return set_response_json(data=data)
+
 
 @app.route('/<board_id>', methods={'GET'})
 def get_board_info(board_id):
@@ -115,6 +113,7 @@ def create_board():
 
 @app.route('/<board_id>', methods={'PUT'})
 def update_board(board_id):
+    return set_response_json({'data': 'Not Implement'})
     # request_json = request.json
     # old_table = requests.get(f"http://127.0.0.1:8080/board/{board_id}").json()
     # request_json.update({'board_id': board_id})
@@ -126,6 +125,7 @@ def update_board(board_id):
 
 @app.route('/<board_id>', methods={'DELETE'})
 def delete_board(board_id):
+    return set_response_json({'data': 'Not Implement'})
     # old_table = requests.get(f"http://127.0.0.1:8080/board/{board_id}").json()
     # if len(old_table['data']) == 0:
     #     return set_response_json(data=None, message=f'board_id:{board_id} is not found', status=404)
@@ -133,20 +133,3 @@ def delete_board(board_id):
     # new_table = requests.get(f"http://127.0.0.1:8080/board/{board_id}").json()
     # return set_response_json({'board_id': board_id, 'changed': {'request': {'board_id': board_id}, 'old': old_table['data'], 'new': new_table['data']}})
     pass
-
-
-def set_response_json(data, message='', status=200):
-
-    if str(status)[0:2] == '20':
-        responce = {'status': 'success'}
-    else:
-        responce = {'status': 'failed', 'message': message}
-    responce.update({'data': data})
-    return jsonify(responce), status
-
-
-def validate_request(schema, value):
-    validator = Validator(schema)
-    if not validator.validate(value):
-        return False, validator.errors
-    return True, None

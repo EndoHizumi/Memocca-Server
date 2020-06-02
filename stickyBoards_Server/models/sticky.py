@@ -3,7 +3,7 @@ import uuid
 from cerberus import Validator
 from flask import Blueprint, current_app, request
 
-from models import db
+from . import db
 from .io_util import set_response_json, validate_request
 
 app = Blueprint('sticky', __name__)

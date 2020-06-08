@@ -1,7 +1,7 @@
 version: "3"
 services:
     stickyDB:
-        container_name: stickyDB
+        container_name: sticky_db
         image: mysql
         ports:
             - "3306:3306"
@@ -10,7 +10,32 @@ services:
             - ./data/mysql_init:/docker-entrypoint-initdb.d
             # 永続化するときにマウントするdir
             - ./data/mysql_data:/var/lib/mysql
+            - ./data/mysql_conf/default_authentication.cnf:/etc/mysql/conf.d/default_authentication.cnf
         environment:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_USER: test
             MYSQL_PASSWORD: test
+    stickySseQueue:
+        container_name: sticky_sse_queue
+        image: "redis:latest"
+        ports:
+          - "6379:6379"
+        volumes:
+          - "./data/redis:/data"
+    stickyApp:
+        container_name: sticky_app
+        image: python
+        ports:
+            - "8080:8080"
+        volumes:
+            - ".:/var/www/html/"
+            - "./tests:/var/www/html/test"
+        environment:
+            STICKY_BOARDS_DB_ID: root
+            STICKY_BOARDS_DB_PASS: root
+            STICKY_BOARDS_DB_LOCATION: sticky_db
+        working_dir: /var/www/html
+        command: >
+            bash -c "apt-get install -y libmariadb-dev && 
+            pip install -r ./requirements.txt &&
+            python ./src/main.py"

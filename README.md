@@ -2,7 +2,7 @@
 
 ## 概要
 
- アカウント登録もなく、インスタントに使えるホワイトボードアプリです。
+ アカウント登録もなく、インスタントに使えるホワイトボードアプリのサーバーサイドです。
  以下のURLはデモサイトです。
  [https://stickyboards.netlify.app/](https://stickyboards.netlify.app/)
 

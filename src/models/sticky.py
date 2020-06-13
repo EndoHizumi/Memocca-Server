@@ -65,7 +65,7 @@ def append_sticky(board_id):
     request_json = request.json
     result, message = validate_request(append_sticky_schema, request_json)
     if not result:
-        return set_response_json(data={'reason': message}, message=f'validation failed. reason: {list(message.keys())}', status=400)
+        return set_response_json(data=None, message=f'validation failed. column: {list(message.keys())} reason:{message}', status=400)
 
     sticky_id = stickies_table.count() + 1
     request_json.update({'sticky_id': sticky_id, 'board_id': board_id})

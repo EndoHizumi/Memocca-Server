@@ -16,7 +16,7 @@ append_sticky_schema = {
         "required": False,
     },
     "board_id": {
-        "type": "String",
+        "type": "string",
         "required": True,
         "maxlength": 6,
         "minlength": 6
@@ -67,7 +67,7 @@ def append_sticky(board_id):
     if not result:
         return set_response_json(data={'reason': message}, message=f'validation failed. reason: {list(message.keys())}', status=400)
 
-    sticky_id = str(uuid.uuid4()).split("-")[-1]
+    sticky_id = stickies_table.count() + 1
     request_json.update({'sticky_id': sticky_id, 'board_id': board_id})
     stickies_table.insert(request_json)
     return set_response_json(data={"sticky_id": sticky_id})

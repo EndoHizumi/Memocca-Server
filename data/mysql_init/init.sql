@@ -5,7 +5,7 @@ create table stickies
     sticky_id varchar(32) NOT NULL,
     user_id int,
     board_id varchar(6),
-    color_code int(8),
+    color_code VARCHAR(20),
     text VARCHAR(8000),
     point_x int,
     point_y int,
@@ -29,9 +29,9 @@ create table users
     password varchar(255),
     email VARCHAR(256),
     salt VARCHAR(29)
-)
+);
 
-
-insert into boards values ('fugafuga','board1','owner1','','0');
-insert into boards values ('hogehoge','board2','owner2','','0');
-insert into boards values ('foobar','board3','owner3','','1');
+INSERT INTO boards VALUES("foobar","board1","owner1","password","salt",0);
+-- 付箋テストデータ
+INSERT INTO stickies VALUES(0,0,"foobar","#f8f8f8","test",0,0,300,300);
+INSERT INTO stickies VALUES(0,0,"foobar","whitesmoke","test2",0,0,100,100);

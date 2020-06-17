@@ -20,12 +20,17 @@
 | stickies | 作ったユーザー・内容・タグなど、付箋のこと・追加された部屋・座標の管理 |
 | owners   | 作ったユーザーと作ったボードの管理                                     |
 | boards   | 各部屋に参加しているメンバーの管理                                     | 退室者は物理削除でいいと思う。 |
-| untitled | ユーザー行動管理 |
 
 ### 関連
 
 ```puml
 @startuml
+    entity "users" as users <<M, MASTER_MARK_COLOR>>{
+        + ユーザーID [PK]
+        --
+        ユーザー名
+        設定色
+    }
 
     entity "stickies" as stickies <<T, MASTER_MARK_COLOR>>{
         + 付箋ID[PK]

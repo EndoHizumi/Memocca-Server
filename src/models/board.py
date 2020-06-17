@@ -84,10 +84,9 @@ board_table = sticky_db['boards']
 
 @app.route('/', methods={'GET'})
 def get_all_boards():
-    return set_response_json({'data': 'Not Implement'})
-    # result = board_table.find(private=0)
-    # data = [{'board_id': row['board_id'], 'board_name': row['board_name']} for row in result]
-    # return set_response_json(data=data)
+    result = board_table.find(private=0)
+    data = [{'board_id': row['board_id'], 'board_name': row['board_name']} for row in result]
+    return set_response_json(data=data)
 
 
 @app.route('/<board_id>', methods={'GET'})
